@@ -8,8 +8,27 @@ CREATE DATABASE library;
 
 CREATE TABLE library_card (
     id UUID PRIMARY KEY,
+    ssn VARCHAR(13),
     first_name VARCHAR(30),
     last_name VARCHAR(30),
+    email VARCHAR(30),
+    home_address VARCHAR(30),
+    postal_code VARCHAR(30),
+    city VARCHAR(30),
     active BOOLEAN,
-    current_loan_amount INT
+    current_loan_amount INT,
+    pin_code INT
+);
+
+CREATE TABLE book 
+(
+    id UUID PRIMARY KEY,
+    isbn VARCHAR(20),
+    title VARCHAR(30),
+    author VARCHAR(30),
+    publisher VARCHAR(30),
+    pages INT,
+    lang VARCHAR(30),
+    release_date DATE,
+    amount_available INT
 );

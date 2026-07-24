@@ -15,17 +15,23 @@ public class MainController : ControllerBase
     [HttpGet("health")]
     public async Task<IActionResult> Health()
     {
-        var connected = await _db.Database.CanConnectAsync();
-        Console.WriteLine(connected);
-        
-        if (!connected)
+        try
         {
-            return StatusCode(500, new { status = "error" });
-        }
+            var connected = await _db.Database.CanConnectAsync();
 
-        return Ok(new
-            {status = "ok"}
-        );
+            if (!connected)
+            {
+                return StatusCode(500, new { status = "error", details = "database is offline or unreachable" });
+            }
+
+            return Ok(new
+                {status = "ok"}
+            );
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
 
 
     }
