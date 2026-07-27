@@ -28,5 +28,5 @@ public class Book
     public required DateOnly ReleaseDate {get; set;}
 
     [Column("amount_available")]
-    public required int AmountAvailable {get; set;}
+    public int AmountAvailable {get; set;} = 1;
 }

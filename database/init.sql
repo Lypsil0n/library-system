@@ -32,3 +32,18 @@ CREATE TABLE book
     release_date DATE,
     amount_available INT
 );
+
+CREATE TABLE loan
+(
+    id UUID PRIMARY KEY,
+    library_card_id UUID references library_card(id),
+    book_id UUID references book(id) 
+);
+
+CREATE TABLE staff
+(
+    id UUID PRIMARY KEY,
+    username VARCHAR(6),
+    email VARCHAR(30),
+    password VARCHAR(30)
+);

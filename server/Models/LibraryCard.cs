@@ -32,7 +32,7 @@ public class LibraryCard
     public required bool Active { get; set; }
 
     [Column("current_loan_amount")]
-    public required int CurrentLoanAmount { get; set; }
+    public int CurrentLoanAmount { get; set; } = 0;
 
     [Column("pin_code")]
     public required int PinCode { get; set; }
