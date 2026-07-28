@@ -45,6 +45,11 @@ public class MainController : ControllerBase
             var libraryCard = await _db.LibraryCards.FirstOrDefaultAsync(l => l.Id == loanDetails.UserId);
             var book = await _db.Books.FirstOrDefaultAsync(b => b.Id == loanDetails.BookId);
 
+
+            if (book == null)
+            {
+                return NotFound(new {message = "book not found"});
+            }
             
             if (book.AmountAvailable <= 0)
             {
@@ -78,7 +83,7 @@ public class MainController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, new { status = "error", details = e.Message });
+            return StatusCode(500, new { status = "error", details = e.Message + e.StackTrace });
         }
     }
 
@@ -93,7 +98,10 @@ public class MainController : ControllerBase
                     l.BookId == loanDetails.BookId);
             var book = await _db.Books.FirstOrDefaultAsync(b => b.Id == loanDetails.BookId);
 
-            Console.WriteLine(libraryCard);
+            if (book == null)
+            {
+                return NotFound(new {message = "book not found"});
+            }
 
             if (libraryCard == null)
             {

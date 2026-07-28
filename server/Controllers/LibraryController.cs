@@ -34,6 +34,27 @@ public class LibraryController : ControllerBase
         }
     }
 
+    [HttpGet("get_book_by_id/{id}")]
+    public async Task<IActionResult> GetBookById(Guid id)
+    {
+        try
+        {
+            var book = await _db.Books.Where(b => b.Id == id).FirstOrDefaultAsync();
+
+            if (book == null)
+            {
+                return NotFound(new { status = "book not found"});
+            }
+
+            return Ok(book);
+            
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
+    }
+
     [HttpGet("get_books_by_keyword")]
     public async Task<IActionResult> GetBooksByKeyword([FromQuery] string keyword)
     {
