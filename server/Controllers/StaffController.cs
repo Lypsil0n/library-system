@@ -64,6 +64,27 @@ public class StaffController : ControllerBase
         }
     }
 
+    [HttpGet("get_library_card_by_id/{id}")]
+    public async Task<IActionResult> GetLibraryCardBySsn(Guid id)
+    {
+        try
+        {
+            var libraryCard = await _db.LibraryCards.Where(l => l.Id == id).FirstOrDefaultAsync();
+
+            if (libraryCard == null)
+            {
+                return NotFound(new { status = "library card not found"});
+            }
+
+            return Ok(libraryCard);
+            
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
+    }
+
     [HttpDelete("delete_library_card/{id}")]
     public async Task<IActionResult> DeleteLibraryCard(Guid id)
     {

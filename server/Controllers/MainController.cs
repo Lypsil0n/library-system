@@ -34,7 +34,6 @@ public class MainController : ControllerBase
             return StatusCode(500, new { status = "error", details = e.Message });
         }
 
-
     }
 
     [HttpPost("loan")]
@@ -130,6 +129,33 @@ public class MainController : ControllerBase
 
             await _db.SaveChangesAsync();
             return Ok( new { message = "succeded"});
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
+    }
+
+    [HttpGet("get_loans_by_library_card/{id}")]
+    public async Task <IActionResult> GetLoansByLibraryCard(Guid id)
+    {
+        try
+        {
+            var libraryCard = await _db.LibraryCards.Where(l => l.Id == id).FirstOrDefaultAsync();
+
+            if (libraryCard == null)
+            {
+                return NotFound(new {message = "library card not found"});
+            }
+
+            var loans = await _db.Loans.Where(l => l.LibraryCardId == id).ToListAsync();
+
+            if (loans.Count <= 0)
+            {
+                return Ok(new {message = "no loans on this card"});
+            }
+
+            return Ok(loans);
         }
         catch (Exception e)
         {
