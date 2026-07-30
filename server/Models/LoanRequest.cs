@@ -1,4 +1,4 @@
-public class LoanDetails
+public class LoanRequest
 {
     public required Guid UserId {get; set;}
 

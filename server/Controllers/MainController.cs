@@ -37,7 +37,7 @@ public class MainController : ControllerBase
     }
 
     [HttpPost("loan")]
-    public async Task<IActionResult> Loan([FromBody] LoanDetails loanDetails)
+    public async Task<IActionResult> Loan([FromBody] LoanRequest loanDetails)
     {
         try 
         {
@@ -87,7 +87,7 @@ public class MainController : ControllerBase
     }
 
     [HttpPost("return")]
-    public async Task<IActionResult> Return([FromBody] LoanDetails loanDetails)
+    public async Task<IActionResult> Return([FromBody] LoanRequest loanDetails)
     {
         try 
         {

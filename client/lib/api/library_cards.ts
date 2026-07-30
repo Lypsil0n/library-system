@@ -1,5 +1,11 @@
+import { notFound } from "next/navigation"
+
 export async function getLibraryCardById(id: string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/get_library_card_by_id/${id}`)
+
+    if (res.status === 404) {
+        notFound();
+    }
 
     if (!res.ok) {
         throw new Error(`Failed to fetch`)
