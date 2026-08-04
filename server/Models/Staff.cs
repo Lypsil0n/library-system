@@ -20,4 +20,7 @@ public class Staff
 
     [Column("password_hash")]
     public string PasswordHash { get; set; } = string.Empty;
+
+    [Column("token_hash")]
+    public string? TokenHash { get; set; }
 }

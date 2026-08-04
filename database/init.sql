@@ -47,5 +47,6 @@ CREATE TABLE staff
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    token_hash TEXT
 );
