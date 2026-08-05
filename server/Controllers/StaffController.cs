@@ -65,6 +65,26 @@ public class StaffController : ControllerBase
             return StatusCode(500, new { status = "error", details = e.Message });
         }
     }
+
+    [HttpGet("get_staff_by_id")]
+    public async Task<IActionResult> GetStaffById([FromHeader] Guid userId, [FromHeader] string token)
+    {
+        if (!await TokenCheck(userId, token))
+        {
+            return Unauthorized(new { message = "token is invalid"});
+        }
+
+        try
+        {
+            var staff = await _db.Staff.FindAsync(userId);
+
+            return Ok(staff);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
+    }
     
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
@@ -96,7 +116,7 @@ public class StaffController : ControllerBase
             staff.TokenHash = tokenHash;
             await _db.SaveChangesAsync();
 
-            return Ok( new { message = "success", userId = staff.Id, role = "staff", token = token});
+            return Ok( new { message = "success", data = new { userId = staff.Id, role = "staff", token = token}});
 
         }
         catch (Exception e)
@@ -106,15 +126,15 @@ public class StaffController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout([FromBody] LoginRequest request)
+    public async Task<IActionResult> Logout([FromBody] LogoutRequest request)
     {
         try
-        {
-            var staff = await _db.Staff.FirstOrDefaultAsync(s => s.Email == request.Email);
+        {   
+            var staff = await _db.Staff.FindAsync(request.UserId);
 
             if (staff == null)
             {
-                return Unauthorized( new {message = "invalid email or password"});
+                return Unauthorized( new {message = "invalid user"});
             }
 
             staff.TokenHash = null;

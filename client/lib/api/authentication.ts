@@ -1,19 +1,54 @@
-export async function login(email: string, password: string) {
+"use server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export async function login(formData: FormData) {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const cookieStore = await cookies();
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            password,
+        }),
+    });
+
+    if (res.status === 401) {
+        
+    }
+
+    const json = await res.json();
+    const data = json.data
+
+    cookieStore.set("userId", data.userId)
+    cookieStore.set("token", data.token)
+
+    redirect("/staff");
+}
+
+export async function logout() {
+    const cookieStore = await cookies();
+
+    const userId = cookieStore.get("userId")?.value
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/logout`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email: email,
-            password: password
+            userId: userId,
         })
     })
 
-    const data = await res.json();
+    cookieStore.delete("userId");
+    cookieStore.delete("token");
 
-    return {
-        status: res.status,
-        data,
-    }
+    redirect("/login")
 }
