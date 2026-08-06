@@ -12,7 +12,7 @@ export default function Home() {
         <h1>Bibliotek</h1>
 
 
-        <button className="login-button" onClick={handleLogin}>Logga in</button>
+        <button className="login-button" onClick={handleLogin}>Logga in som personal</button>
     </div>
   );
 }

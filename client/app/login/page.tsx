@@ -1,28 +1,10 @@
-import { login } from "@/lib/api/authentication";
+import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
     return (
-        <div>
+        <div >
             <h1>Logga in som personal</h1>
-
-            <form action={login}>
-
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="E-post"
-                />
-
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Lösenord"
-                />
-
-                <button type="submit">
-                    Logga in
-                </button>
-            </form>
+            <LoginForm/>
         </div>
     );
 }

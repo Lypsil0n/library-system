@@ -1,4 +1,5 @@
 "use server";
+import { ok } from "assert";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -8,7 +9,7 @@ export async function login(formData: FormData) {
 
     const cookieStore = await cookies();
     
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/login`, {
+    const res = await fetch(`${process.env.API_URL}/api/v1/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -20,16 +21,28 @@ export async function login(formData: FormData) {
     });
 
     if (res.status === 401) {
-        
+        return {
+            success: false,
+            error: "Invalid email or password"
+        }
+    }
+
+    if (!res.ok) {
+        return {
+            success: false,
+            error: "Something went wrong"
+        }
     }
 
     const json = await res.json();
-    const data = json.data
 
-    cookieStore.set("userId", data.userId)
-    cookieStore.set("token", data.token)
+    cookieStore.set("userId", json.data.userId)
+    cookieStore.set("token", json.data.token)
 
-    redirect("/staff");
+    return {
+        success: true,
+        message: "Login successful"
+    }
 }
 
 export async function logout() {
@@ -37,7 +50,7 @@ export async function logout() {
 
     const userId = cookieStore.get("userId")?.value
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/logout`, {
+    await fetch(`${process.env.API_URL}/api/v1/logout`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
