@@ -1,7 +1,13 @@
 import { notFound, unauthorized } from "next/navigation"
 
-export async function getLibraryCardById(id: string) {
-    const res = await fetch(`${process.env.API_URL}/api/v1/get_library_card_by_id/${id}`)
+export async function getLibraryCardById(id: string, userId: string, token: string) {
+    const res = await fetch(`${process.env.API_URL}/api/v1/get_library_card_by_id/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'userId': userId,
+            'token': token
+        }
+    })
 
     if (res.status === 404) {
         notFound();
@@ -12,6 +18,7 @@ export async function getLibraryCardById(id: string) {
     }
 
     if (!res.ok) {
+        console.log(res)
         throw new Error(`Failed to fetch`)
     }
 
@@ -24,6 +31,8 @@ export async function getAllLibraryCards() {
     if (!res.ok) {
         throw new Error(`Failed to fetch`)
     }
+
+    
 
     return res.json()
 }

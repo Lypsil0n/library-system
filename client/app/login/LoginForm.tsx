@@ -25,25 +25,50 @@ export default function LoginForm() {
     }
 
     return (
-    <form 
-        onSubmit={handleLogin} 
-        className="flex flex-col gap-4"
-    >
-        <input
-            type="email"
-            name="email"
-            placeholder="E-post"
-        />
+        <form
+            onSubmit={handleLogin}
+            className="flex flex-col gap-5"
+            >
+            <div>
+                <label
+                htmlFor="email"
+                className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                E-post
+                </label>
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Lösenord"
-        />
+                <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="namn@företag.se"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                />
+            </div>
 
-        <button type="submit">
-            Logga in
-        </button>
-    </form>
+            <div>
+                <label
+                htmlFor="password"
+                className="mb-2 block text-sm font-medium text-gray-700"
+                >
+                Lösenord
+                </label>
+
+                <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                />
+            </div>
+
+            <button
+                type="submit"
+                className="mt-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98]"
+            >
+                Logga in
+            </button>
+        </form>
     )
 }
