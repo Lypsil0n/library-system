@@ -1,3 +1,4 @@
+import Back from "./Back";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
@@ -9,6 +10,7 @@ export default function LoginPage() {
             </h1>
 
             <LoginForm />
+            <Back></Back>
         </div>
         </div>
     );

@@ -40,6 +40,19 @@ public class StaffController : ControllerBase
         return result == PasswordVerificationResult.Success;
     }
 
+    [HttpGet("is_current_token_valid")]
+    public async Task<IActionResult> IsCurrentTokenValid([FromHeader] Guid userId, [FromHeader] string token)
+    {
+        var result = await TokenCheck(userId, token);
+
+        if (!result)
+        {
+            return Unauthorized(new { valid = result, message = "not ok"});
+        }
+
+        return Ok(new { valid = result, message = "ok"});
+    }
+
     [HttpPost("create_staff")]
     public async Task<IActionResult> CreateStaff([FromBody] CreateStaffRequest request)
     {

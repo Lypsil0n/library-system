@@ -45,6 +45,28 @@ export async function login(formData: FormData) {
     }
 }
 
+export async function isCurrentTokenValid() {
+    const cookieStore = await cookies();
+
+    const userId = cookieStore.get("userId")?.value
+    const token = cookieStore.get("token")?.value
+
+    if (!userId || !token) 
+        return;
+
+    const res = await fetch(`${process.env.API_URL}/api/v1/is_current_token_valid`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'userId': userId,
+            'token': token
+        }
+    })
+
+    const json = res.json()
+
+    return json
+}
+
 export async function logout() {
     const cookieStore = await cookies();
 

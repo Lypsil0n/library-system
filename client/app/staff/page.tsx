@@ -1,19 +1,16 @@
 import { getUserData } from "@/lib/api/staff"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { logout } from "@/lib/api/authentication";
+import { isCurrentTokenValid, logout } from "@/lib/api/authentication";
 
 export default async function StaffPage() {
-    const cookieStore = await cookies();
-    const userId = cookieStore.get("userId")?.value;
-    const token = cookieStore.get("token")?.value;
-    
+    const validToken = await isCurrentTokenValid();
 
-    if (!userId || !token) {
+    if (!validToken || !validToken.valid) {
         redirect("/login");
     }
 
-    const userData = (await getUserData(userId, token)).data;
+    const userData = (await getUserData()).data;
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -30,7 +27,7 @@ export default async function StaffPage() {
                 @{userData.username}
                 </p>
 
-                <div className="my-6 h-px bg-gray-200" />
+                <div className="my-2 h-px bg-gray-200" />
 
                 <p className="mb-6 text-gray-600">
                 Du är nu inloggad som personal.
