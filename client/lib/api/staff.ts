@@ -6,7 +6,7 @@ export async function getUserData() {
     const token = cookieStore.get("token")?.value;
 
     if (!userId || !token) 
-        throw new Error("Missing authentication cookies");
+        return;
 
     const res = await fetch(`${process.env.API_URL}/api/v1/get_staff_by_id`, {
         headers: {

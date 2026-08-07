@@ -4,13 +4,16 @@ import { redirect } from "next/navigation";
 import { isCurrentTokenValid, logout } from "@/lib/api/authentication";
 
 export default async function StaffPage() {
-    const validToken = await isCurrentTokenValid();
+    // const validToken = await isCurrentTokenValid();
 
-    if (!validToken || !validToken.valid) {
-        redirect("/login");
-    }
+    // if (!validToken || !validToken.valid) {
+    //     redirect("/login");
+    // }
 
-    const userData = (await getUserData()).data;
+    const userData = (await getUserData())?.data;
+
+    if (!userData || userData.status === 401)
+        redirect("/login")
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
