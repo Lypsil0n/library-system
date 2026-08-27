@@ -1,0 +1,41 @@
+volumes:
+  postgres-data:
+
+networks:
+  library:
+
+services:
+  db:
+    container_name: library-db
+    image: localhost/library-db:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - library
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+
+  server:
+    container_name: library-server
+    image: localhost/library-server:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - library
+    depends_on:
+      db:
+        condition: service_healthy
+    
+  # client:
+  #   container_name: library-client
+  #   image: localhost/library-client:latest
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - library
+

@@ -1,4 +1,4 @@
-import Back from "./Back";
+import BackButton from "./BackButton";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
@@ -10,7 +10,7 @@ export default function LoginPage() {
             </h1>
 
             <LoginForm />
-            <Back></Back>
+            <BackButton/>
         </div>
         </div>
     );

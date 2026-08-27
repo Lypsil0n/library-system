@@ -1,18 +1,14 @@
 import { getUserData } from "@/lib/api/staff"
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { isCurrentTokenValid, logout } from "@/lib/api/authentication";
+import LibraryCardButton from "./LibraryCardButton";
 
 export default async function StaffPage() {
-    // const validToken = await isCurrentTokenValid();
-
-    // if (!validToken || !validToken.valid) {
-    //     redirect("/login");
-    // }
-
     const userData = (await getUserData())?.data;
 
-    if (!userData || userData.status === 401)
+    const isTokenValid = await isCurrentTokenValid()
+
+    if (!userData || userData.status === 401 || !isTokenValid.valid)
         redirect("/login")
 
     return(
@@ -36,10 +32,13 @@ export default async function StaffPage() {
                 Du är nu inloggad som personal.
                 </p>
 
+
+                <LibraryCardButton/>
+
                 <form action={logout}>
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700 active:scale-[0.98]"
+                    className="w-full mt-2 rounded-lg bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700 active:scale-[0.98]"
                     >
                     Logga ut
                 </button>

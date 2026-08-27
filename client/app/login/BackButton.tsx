@@ -2,12 +2,9 @@
 
 import { useRouter } from "next/navigation";
 
-export default function Back() {
+export default function BackButton() {
     const router = useRouter();
 
-    function handleBack() {
-        router.push("/")
-    }
 
     return (
         <button

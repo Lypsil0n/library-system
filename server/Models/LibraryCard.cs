@@ -29,7 +29,7 @@ public class LibraryCard
     public required string City { get; set; }
 
     [Column("active")]
-    public required bool Active { get; set; }
+    public bool Active { get; set; } = true;
 
     [Column("current_loan_amount")]
     public int CurrentLoanAmount { get; set; } = 0;

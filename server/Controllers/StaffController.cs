@@ -176,7 +176,7 @@ public class StaffController : ControllerBase
             _db.LibraryCards.Add(libraryCard);
             await _db.SaveChangesAsync();
 
-            return Ok( new {status = "success"});
+            return Ok( new {status = "success", id = libraryCard.Id});
             
         }
         catch (Exception e)
