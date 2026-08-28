@@ -2,7 +2,14 @@
 
 import { cookies } from "next/headers";
 
-export async function getLibraryCardById(id: string, userId: string, token: string) {
+export async function getLibraryCardById(id: string) {
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("userId")?.value;
+    const token = cookieStore.get("token")?.value;
+
+    if (!userId || !token) 
+        return;
+
     const res = await fetch(`${process.env.API_URL}/api/v1/get_library_card_by_id/${id}`, {
         headers: {
             'Content-Type': 'application/json',

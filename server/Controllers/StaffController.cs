@@ -293,6 +293,11 @@ public class StaffController : ControllerBase
             return Unauthorized(new { message = "token is invalid"});
         }
 
+        if (book is null)
+        {
+            return BadRequest(new { status = "error", details = "Request body is missing or invalid." });
+        }
+
         try
         {
             _db.Books.Add(book);

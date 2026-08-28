@@ -1,6 +1,8 @@
 import { getLibraryCardById } from "@/lib/api/library_cards";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import BackButton from "../create/BackButton";
+import { isCurrentTokenValid } from "@/lib/api/authentication";
 
 export default async function LibraryCard({
   params,
@@ -8,21 +10,18 @@ export default async function LibraryCard({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const cookieStore = await cookies();
 
-  const userId = cookieStore.get("userId")?.value;
-  const token = cookieStore.get("token")?.value;
+  const isTokenValid = await isCurrentTokenValid()
 
-  
-  if (!userId || !token) {
+  if (!isTokenValid.valid) {
       redirect("/login");
   }
 
-  const libraryCard = await getLibraryCardById(id, userId, token);
+  const libraryCard = await getLibraryCardById(id);
 
 
   return (
-    <div className="rounded-2xl bg-white p-8 shadow-lg">
+    <div className="rounded-2xl bg-white p-8 shadow-lg mx-auto max-w-xlg">
       <h1 className="mb-6 text-3xl font-bold text-gray-800">
         Lånekort
       </h1>
@@ -93,6 +92,7 @@ export default async function LibraryCard({
           </p>
         </div>
       </div>
+      <BackButton/>
     </div>
   )
 }

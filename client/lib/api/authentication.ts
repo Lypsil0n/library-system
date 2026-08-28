@@ -47,11 +47,8 @@ export async function login(formData: FormData) {
 export async function isCurrentTokenValid() {
     const cookieStore = await cookies();
 
-    const userId = cookieStore.get("userId")?.value
-    const token = cookieStore.get("token")?.value
-
-    if (!userId || !token) 
-        return;
+    const userId = cookieStore.get("userId")?.value ?? ""
+    const token = cookieStore.get("token")?.value ?? ""
 
     const res = await fetch(`${process.env.API_URL}/api/v1/is_current_token_valid`, {
         headers: {
