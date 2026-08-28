@@ -173,6 +173,11 @@ public class StaffController : ControllerBase
 
         try
         {
+            if (!libraryCard.PostalCode.Contains(" "))
+            {
+                libraryCard.PostalCode = libraryCard.PostalCode.Insert(libraryCard.PostalCode.Length - 2, " ");
+            }
+
             _db.LibraryCards.Add(libraryCard);
             await _db.SaveChangesAsync();
 
