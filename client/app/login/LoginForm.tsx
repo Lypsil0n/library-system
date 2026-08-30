@@ -62,7 +62,7 @@ export default function LoginForm() {
 
             <button
                 type="submit"
-                className="mt-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98]"
+                className="mt-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98] cursor-pointer" 
             >
                 Logga in
             </button>

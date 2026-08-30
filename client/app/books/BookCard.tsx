@@ -1,8 +1,13 @@
+"use client"
+
+import { useRouter } from "next/navigation";
 import type { Book } from "@/types/book";
 
 export default function BookCard({ book }: { book: Book }) {
+    const router = useRouter()
+
     return (
-        <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-lg">
+        <div onClick={() => router.push(`/books/${book.isbn}`)} className="flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-lg cursor-pointer">
             <div className="h-2 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700" />
 
             <div className="flex flex-1 flex-col p-8">

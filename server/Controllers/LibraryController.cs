@@ -55,6 +55,27 @@ public class LibraryController : ControllerBase
         }
     }
 
+    [HttpGet("get_book_by_isbn/{isbn}")]
+    public async Task<IActionResult> GetBookByIsbn(String isbn)
+    {
+        try
+        {
+            var book = await _db.Books.Where(b => b.Isbn == isbn).FirstOrDefaultAsync();
+
+            if (book == null)
+            {
+                return NotFound(new { status = "book not found"});
+            }
+
+            return Ok(book);
+            
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, new { status = "error", details = e.Message });
+        }
+    }
+
     [HttpGet("get_books_by_keyword")]
     public async Task<IActionResult> GetBooksByKeyword([FromQuery] string keyword)
     {

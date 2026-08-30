@@ -24,14 +24,14 @@ export default function Home() {
         
         <button
           onClick={handleBooks}
-          className="w-full rounded-lg mt-2 bg-blue-400 py-3 font-semibold text-white transition hover:bg-blue-500 active:scale-[0.98]"
+          className="w-full rounded-lg mt-2 bg-blue-400 py-3 font-semibold text-white transition hover:bg-blue-500 active:scale-[0.98] cursor-pointer"
         >
           Sök efter böcker
         </button>
 
         <button
           onClick={handleLogin}
-          className="w-full rounded-lg mt-2 bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98]"
+          className="w-full rounded-lg mt-2 bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98] cursor-pointer"
         >
           Logga in som personal
         </button>
